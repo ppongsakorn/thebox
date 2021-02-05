@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-"# thebox" 
-=======
 # start thebox 
 5 February 2021, 10:10 AM
 
@@ -34,4 +31,3 @@ git push //curent local branch to remote branch
 git config --global user.email "you@example.com"
 
 git config --global user.name "Your Name"
->>>>>>> refs/remotes/origin/main
