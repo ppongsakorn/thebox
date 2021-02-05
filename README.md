@@ -18,6 +18,8 @@ git push -u origin main
 ---
 
 # update the box
+git pull
+
 git status
 
 git add *.* //sth name
