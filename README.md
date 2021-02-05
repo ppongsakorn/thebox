@@ -15,7 +15,6 @@ git remote add origin https://github.com/ppongsakorn/thebox.git
 
 git push -u origin main
 
----
 
 # update the box
 git pull
