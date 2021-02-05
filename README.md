@@ -27,3 +27,8 @@ git add *.* //sth name
 git commit -m "sth about ..."
 
 git push //curent local branch to remote branch
+
+# config user
+git config --global user.email "you@example.com"
+
+git config --global user.name "Your Name"
