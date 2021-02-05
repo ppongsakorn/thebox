@@ -16,3 +16,12 @@ git remote add origin https://github.com/ppongsakorn/thebox.git
 git push -u origin main
 
 ---
+
+# update the box
+git status
+
+git add *.* //sth name
+
+git commit -m "sth about ..."
+
+git push //curent local branch to remote branch
