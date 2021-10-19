@@ -1,0 +1,1 @@
+db.getCollection('user').find({"firstname": /พงศ/ ,"lastname":/แสนคำ/ , "contactnumber" : /876144/, "birthday" : /1982/ })

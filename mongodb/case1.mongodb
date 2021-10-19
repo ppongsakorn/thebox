@@ -1,0 +1,16 @@
+//Search (Tb.User)
+//Search exact match contactnumber จาก table user : 0982624364
+use("usermgr");
+db.user.find(
+    {"contactnumber":"0646425081","gender":/male/},
+    {_id:1,partitionkey:1,firstname:1,lastname:1,contactnumber:1},
+    {limit:1}
+)
+//Sort (Tb.User)
+//Sort ascending birthday จาก table user
+//Sort ascending contactnumber จาก table user ที่ contactnumber is not null
+db.user.find(
+    {},
+    {_id:0}
+    {limit:10}
+)

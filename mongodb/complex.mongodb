@@ -1,0 +1,94 @@
+db = db.getSiblingDB("usermgr");
+db.getCollection("user").aggregate(
+    [
+        { 
+            "$match" : { 
+                "partitionkey" : "OSW_1556622162646"
+            }
+        }, 
+        { 
+            "$lookup" : { 
+                "from" : "userlogin", 
+                "localField" : "partitionkey", 
+                "foreignField" : "userid", 
+                "as" : "userlogins"
+            }
+        }, 
+        { 
+            "$lookup" : { 
+                "from" : "campaignserials", 
+                "localField" : "partitionkey", 
+                "foreignField" : "refid", 
+                "as" : "redeemhistory"
+            }
+        }, 
+        { 
+            "$lookup" : { 
+                "from" : "couponhistory", 
+                "localField" : "partitionkey", 
+                "foreignField" : "PartitionKey", 
+                "as" : "couponhistory"
+            }
+        }, 
+        { 
+            "$project" : { 
+                "firstname" : 1.0, 
+                "lastname" : 1.0, 
+                "partitionkey" : 1.0, 
+                "birthday" : 1.0, 
+                "redeemhistory" : { 
+                    "$filter" : { 
+                        "input" : "$redeemhistory", 
+                        "as" : "item", 
+                        "cond" : { 
+                            "$eq" : [
+                                "$$item.itemnumber", 
+                                4601084.0
+                            ]
+                        }
+                    }
+                }, 
+                "couponhistory" : { 
+                    "$filter" : { 
+                        "input" : "$couponhistory", 
+                        "as" : "item", 
+                        "cond" : { 
+                            "$eq" : [
+                                "$$item.PointsEarn", 
+                                1.0
+                            ]
+                        }
+                    }
+                }, 
+                "userlogins" : { 
+                    "$filter" : { 
+                        "input" : "$userlogins", 
+                        "as" : "item", 
+                        "cond" : { 
+                            "$and" : [
+                                { 
+                                    "$gt" : [
+                                        "$$item.logindate", 
+                                        "2021-01-30"
+                                    ]git s
+                                }, 
+                                { 
+                                    "$lt" : [
+                                        "$$item.logindate", 
+                                        "2021-03-30"
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }, 
+        { 
+            "$limit" : 1.0
+        }
+    ], 
+    { 
+        "allowDiskUse" : false
+    }
+);

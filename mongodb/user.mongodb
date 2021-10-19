@@ -1,0 +1,67 @@
+
+use('usermgr');
+
+db.user.aggregate([
+{
+$match: { partitionkey:"OSW_1556622162646"}
+}, 
+{
+$lookup: {
+            from: 'userlogin',
+            localField: 'partitionkey',
+            foreignField: 'userid',
+            as: 'userlogins'
+        }
+}, 
+{
+$lookup: {
+            from: 'campaignserials',
+            localField: 'partitionkey',
+            foreignField: 'refid',
+            as: 'redeemhistory'
+        }       
+},
+{
+$lookup: {
+            from: 'couponhistory',
+            localField: 'partitionkey',
+            foreignField: 'PartitionKey',
+            as: 'couponhistory'
+        }       
+},
+{
+$project: { 
+
+            // specifications
+            firstname:1,
+            lastname:1,
+            partitionkey:1,
+            birthday:1,
+            redeemhistory:{
+                
+                $filter : {
+                            input: '$redeemhistory',
+                            as : 'item',
+                            cond : {$eq : ['$$item.itemnumber',4601084]}
+
+                },
+                
+            },
+            couponhistory:{
+                $filter : {
+                            input: '$couponhistory',
+                            as : 'item',
+                            cond : {$eq : ['$$item.PointsEarn',1]}
+                }
+            },
+            userlogins : {
+                $filter : {
+                            input: '$userlogins',
+                            as : 'item',
+                            cond : {$and : [{ $gt : ['$$item.logindate','2021-01-30'] },{$lt : ['$$item.logindate','2021-03-30']}]}
+                            }
+            },
+            
+}    
+    ]
+);
