@@ -15,4 +15,9 @@ function createSharedAccessToken(uri, saName, saKey) {
     return 'SharedAccessSignature sr=' + encoded + '&sig=' +  
         encodeURIComponent(hash) + '&se=' + ttl + '&skn=' + saName; 
 }
-//https://docs.microsoft.com/en-us/rest/api/eventhub/generate-sas-token#using-the-shared-access-signature-at-http-level
+
+var url = "[namespace].servicebus.windows.net/[eventhubname]"
+var saName = "[policyname]"
+var saKey = "[key]"
+
+console.log(createSharedAccessToken(url,saName,saKey))
