@@ -32,3 +32,19 @@ ORDER BY
     TotalSpaceMB DESC, t.Name
 
 ```
+
+# Get Size of Table in MySQL
+
+```sql
+SELECT 
+  TABLE_NAME AS `Table`, 
+  CONVERT_TZ(NOW(), @@session.time_zone, '+07:00') AS BKKTime,
+  ROUND((DATA_LENGTH + INDEX_LENGTH) / 1024 / 1024, 2) AS `Size in MB`,
+  ROUND((DATA_LENGTH + INDEX_LENGTH) / 1024 / 1024 / 1024, 2) AS `Size in GB`
+FROM 
+  information_schema.TABLES 
+WHERE 
+  TABLE_SCHEMA = 'matomo'
+ORDER BY 
+  `Size in MB` DESC;
+```
