@@ -44,7 +44,7 @@ SELECT
 FROM 
   information_schema.TABLES 
 WHERE 
-  TABLE_SCHEMA = 'matomo'
+  TABLE_SCHEMA = '{table_name}'
 ORDER BY 
   `Size in MB` DESC;
 ```
